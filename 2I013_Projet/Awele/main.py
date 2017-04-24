@@ -11,21 +11,19 @@ game.joueur1=joueur_humain
 game.joueur2=joueur_alphabeta
 
 resultat = [0, 0]
-for i in range(1000):
+for index in range(1000):
     jeu = game.initialiseJeu()
-    print "Partie n°%d" % i
+    print("Partie n°{:d}".format(index))
     while not game.finJeu(jeu):
         game.getCoupsValides(jeu)
         coup = game.saisieCoup(jeu)
         game.joueCoup(jeu, coup)
-
-    g = game.getGagnant(jeu)
-    if g == 1:
+    gagnant = game.getGagnant(jeu)
+    if gagnant == 1:
         resultat[0] += 1
-    elif g == 2:
+    elif gagnant == 2:
         resultat[1] += 1
 #game.affiche(jeu)
+    print("Le gagnant est : {:d}".format(gagnant))
 
-    print "Le gagant est : %d" %  g
-
-print "Joueur 1 a gagne %d, Joueur 2 a gagne %d" % (resultat[0], resultat[1])
+print("Joueur 1 a gagne {:d}, Joueur 2 a gagne {:d}".format(resultat[0], resultat[1]))

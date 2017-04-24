@@ -26,130 +26,126 @@ def finJeu(jeu):
     return not len(game.getCoupsValides(jeu)) or score[0] >= 25 or score[1] >= 25
 	
 def getCoupsValides(jeu):
-        a=adversaireAffame(jeu)
-        cp=coups(jeu)#retourne la liste des cases du joueur contenant au moins une graine       
-        if(a==False):
-            return cp
-            
-        v=[]
-        for coup in cp:
-                c=coup[1]
-                l=coup[0]
-                g=game.getCaseVal(jeu,l,c)
-                if l==0:
-                        if g>c:
-                                v.append(coup)
-
-                else :
-                        if g>=(6-c):
-                                v.append(coup)
-        return v
+    is_affame = adversaireAffame(jeu)
+    cases_pleines = coups(jeu) # retourne la liste des cases du joueur contenant au moins une graine       
+    if not is_affame:
+        return cases_pleines
+    coups_valides = list()
+    for coup in cases_pleines:
+        x = coup[1]
+        y = coup[0]
+        value = game.getCaseVal(jeu, y, x)
+        if not y:
+            if value > x:
+                coups_valides.append(coup)
+        else :
+            if value >= 6 - x:
+                coups_valides.append(coup)
+    return coups_valides
 
 
-
-def joueCoups(jeu,coup):
-        v=game.getCaseVal(jeu,coup[0],coup[1])
-        game.setCaseVal(jeu,coup[0],coup[1],0)
-        distribue(jeu,coup,v)
-        game.addCoupJoue(jeu,coup)
-        game.changeJoueur(jeu)
-        game.razCoupsValides(jeu)
+def joueCoups(jeu, coup):
+    value = game.getCaseVal(jeu, coup[0], coup[1])
+    game.setCaseVal(jeu, coup[0], coup[1], 0)
+    distribue(jeu, coup, value)
+    game.addCoupJoue(jeu, coup)
+    game.changeJoueur(jeu)
+    game.razCoupsValides(jeu)
 
 	
-def distribue(jeu,coup,nb):
-    c=coup
-    
-    liste=[]
+def distribue(jeu, coup, nb):
+    tmp_coup = coup
+    graines = list()
     while (nb > 0) :            
-        c=nextCase(jeu,c,True)
-        if c[0]==coup[0] and c[1]==coup[1]:
+        tmp_coup = nextCase(jeu, tmp_coup, True)
+        if tmp_coup[0] == coup[0] and tmp_coup[1] == coup[1]:
             continue
-        game.addCaseVal(jeu,c[0],c[1],1)
-        nb-=1
-        
-    while peutManger(jeu,c):
-        v=game.getCaseVal(jeu,c[0],c[1])
-        liste.append(v)
-        game.setCaseVal(jeu,c[0],c[1],0)
-        game.addScore(jeu,game.getJoueur(jeu),v)
-        c=nextCase(jeu,c,False)
-        
-    if(len(liste)>0) and adversaireAffame(jeu):
-            n=1
-            while(n<=len(liste)):
-                c=nextCase(jeu,c,True)
-                g=liste[-n]
-                game.setCaseVal(jeu,c[0],c[1],g)
-                game.addScore(jeu,game.getJoueur(jeu),-g)  
-                n+=1
-       
+        game.addCaseVal(jeu, tmp_coup[0], tmp_coup[1], 1)
+        nb -= 1
+    while peutManger(jeu, tmp_coup):
+        value = game.getCaseVal(jeu, tmp_coup[0], tmp_coup[1])
+        graines.append(value)
+        game.setCaseVal(jeu, tmp_coup[0], tmp_coup[1], 0)
+        game.addScore(jeu, game.getJoueur(jeu), value)
+        tmp_coup = nextCase(jeu, tmp_coup, False)
+    if len(graines) > 0 and adversaireAffame(jeu):
+        index = 1
+        while index <= len(graines):
+            tmp_coup = nextCase(jeu, tmp_coup, True)
+            tmp_graine = liste[-index]
+            game.setCaseVal(jeu, tmp_coup[0], tmp_coup[1], tmp_graine)
+            game.addScore(jeu, game.getJoueur(jeu), -tmp_graine)  
+            index += 1
 
-def peutManger(jeu,c):
-	""""jeu * Pair[nat nat] -> bool
+
+def peutManger(jeu, coup):
+	"""jeu * Pair[nat nat] -> bool
         Retourne vrai si on peut manger le contenu de la case:
             - c'est une case appartenant a l'adversaire du joueur courant
             - La case contient 2 ou 3 graines
-        """
-	if c[0]==(game.getJoueur(jeu)-1):
+    """
+    coup_y, coup_x = coup
+	if coup_y == game.getJoueur(jeu) - 1:
 		return False
-	v=game.getCaseVal(jeu,c[0],c[1])
-	if(v!=2)and(v!=3):
+	value = game.getCaseVal(jeu, coup_y, coup_x)
+	if value not in [2, 3]:
 		return False
 	return True
 	
 
 def adversaireAffame(jeu):
-	j=game.getJoueur(jeu)
-	j=j%2+1 #on recupere le joueur adverse
-	for i in range (0,6):
-		coup=game.getCaseVal(jeu,j-1,i)
-		if coup!=0 :
+	joueur = game.getJoueur(jeu)
+	joueur = joueur % 2 + 1 #on recupere le joueur adverse
+	for index in range(6):
+		coup = game.getCaseVal(jeu, joueur - 1, index)
+		if coup:
 			return False
 	return True
-	
-            
-            
-def nextCase(jeu,coup,antihoraire=True):
-        sens=1
-        if (antihoraire):
-        	if(coup[0]==1):
-        		case= coup[1]+sens #dans le cas ou on se trouve sur la 2eme ligne
-                if(coup[0]==0):
-                	case=coup[1]-sens #dans le cas ou on se trouve sur la 1ere ligne
-                if(case<0 and coup[0]==0): #dans le cas ou on se trouve dans la 1ere ligne 1ere colonne dans le sens -1
-                	return [1,0]
-                if(case>5 and coup[0]==1):
-                	return [0,5]
-                return[coup[0],case]
-                
-        else :
-        	if(coup[0]==1):
-        		case= coup[1]-sens #dans le cas ou on se trouve sur la 2eme ligne
-                if(coup[0]==0):
-                	case=coup[1]+sens #dans le cas ou on se trouve sur la 1ere ligne 
-                if(case<0 and coup[0]==1):
-                	return [0,0]
-                if(case>5 and coup[0]==1):
-                	return [1,5]
-		return [coup[0],case]        
-        
-         
+
+
+def nextCase(jeu, coup, antihoraire = True):
+    sens = 1
+    coup_y, coup_x = coup
+    if antihoraire:
+        # if coup_y != 1:
+        #     return [coup_y, case]        
+        if coup_y == 1:
+            case = coup_x + sens #dans le cas ou on se trouve sur la 2eme ligne
+            if not coup_y:
+                case = coup_x - sens #dans le cas ou on se trouve sur la 1ere ligne
+            if case < 0 and not coup_y: #dans le cas ou on se trouve dans la 1ere ligne 1ere colonne dans le sens -1
+                return [1, 0]
+            if case > 5 and coup_x == 1 :
+                return [0, 5]
+            return [coup_y, case]
+    else:
+        if coup_y == 1:
+            case = coup_x - sens #dans le cas ou on se trouve sur la 2eme ligne
+            if not coup_y:
+                case = coup_x + sens #dans le cas ou on se trouve sur la 1ere ligne 
+            if case < 0 and coup_y == 1:
+                return [0, 0]
+            if case > 5 and coup_y == 1:
+                return [1, 5]
+    return [coup[0], case]        
+
+
 def coups(jeu):
-	liste= []
-	j=game.getJoueur(jeu)
-	for i in range (0,6):
-		v=game.getCaseVal(jeu,j-1,i)
-		if(v!=0):
-			liste.append([j-1,i])
-	return liste
+	graines = list()
+	joueur = game.getJoueur(jeu)
+	for index in range(6):
+		value = game.getCaseVal(jeu, j - 1 , index)
+		if value:
+			graines.append([j - 1, index])
+	return graines
 	
 
 def finalisePartie(jeu):
     """jeu->void
         Met a jour les scores des joueurs en prenant en compte les graines restantes sur le plateau
     """
-    p=game.getPlateau(jeu)
-    g1=reduce(lambda a,b: a+b,p[0])
-    g2=reduce(lambda a,b: a+b,p[1])
-    game.addScore(jeu,1,g1)
-    game.addScore(jeu,2,g2)
+    plateau_jeu = game.getPlateau(jeu)
+    graines_1 = sum(plateau_jeu[0])
+    graines_2 = sum(plateau_jeu[1])
+    game.addScore(jeu, 1, graines_1)
+    game.addScore(jeu, 2, graines_2)

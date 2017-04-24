@@ -4,5 +4,5 @@ import game
 from random import choice
 
 def saisieCoup(jeu):
-	Liste=game.getCoupsValides(jeu)
-	return choice(Liste)
+	coups_valides = game.getCoupsValides(jeu)
+	return choice(coups_valides)

@@ -76,5 +76,3 @@ def decision(jeu):
                 		index = i
                 		alpha = k
     	return liste_coup[index]
-
-

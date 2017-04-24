@@ -3,9 +3,9 @@ sys.path.append("../..")
 import game
 
 def saisieCoup(jeu):
-	c=input("Joueur"+str(game.getJoueur(jeu))+" : quelle colonne ? ")
-	coup=[game.getJoueur(jeu)-1,c]
-	while(not(game.coupValide(jeu,coup))):
-		c=input("Coup non valide, recommencez")
-		coup=[game.getJoueur(jeu)-1,c]
+    coup_x = input("Joueur{:d} : quelle colonne ?".format(game.getJoueur(jeu)))
+	coup = [game.getJoueur(jeu) - 1, coup_x]
+	while not game.coupValide(jeu,coup):
+		coup_x = input("Coup non valide, recommencez")
+		coup = [game.getJoueur(jeu) - 1, coup_x]
 	return coup
