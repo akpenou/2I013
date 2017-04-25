@@ -1,4 +1,5 @@
 # coding: utf-8
+from copy import deepcopy
 # plateau: List[List[nat]]
 # liste de listes (lignes du plateau) d'entiers correspondant aux contenus des cases du plateau de jeu
 
@@ -93,6 +94,7 @@ def getGagnant(jeu):
     Retourne le numero du joueur gagnant apres avoir finalise la partie. Retourne 0 si match nul
     """
     score = getScores(jeu)
+    print(score)
     if score[0] < score[1]:
         return 2
     elif score[1] < score[0]:
@@ -244,7 +246,7 @@ def getCaseVal(jeu, ligne, colonne):
     plateau_jeu = jeu[0]
     return plateau_jeu[ligne][colonne]
     
-def setCaseVal(jeu,ligne,colonne,val):
+def setCaseVal(jeu, ligne, colonne, value):
     """ Initialize une case du jeu.
 
     Args:

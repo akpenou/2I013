@@ -6,19 +6,19 @@ import game
 
 
 def initPlateau():
-	"""void->plateau
-	initialise le plateau
-	"""
-	#Plateau:list[list[int]]
+    """void->plateau
+        initialise le plateau
+    """
+    #Plateau:list[list[int]]
     plateau = [ [ 4 for x in range(6) ] for y in range(2) ]
-	return plateau
+    return plateau
 	
 	
 def initScores():
-	"""void->tuple[int,int]
-	initialise score
-	"""
-	return [0, 0]
+    """void->tuple[int,int]
+    initialise score
+    """
+    return [0, 0]
 	
 def finJeu(jeu):
     score = game.getScores(jeu)
@@ -45,6 +45,7 @@ def getCoupsValides(jeu):
 
 
 def joueCoups(jeu, coup):
+    print(coup[0])
     value = game.getCaseVal(jeu, coup[0], coup[1])
     game.setCaseVal(jeu, coup[0], coup[1], 0)
     distribue(jeu, coup, value)
@@ -72,35 +73,36 @@ def distribue(jeu, coup, nb):
         index = 1
         while index <= len(graines):
             tmp_coup = nextCase(jeu, tmp_coup, True)
-            tmp_graine = liste[-index]
+            tmp_graine = graines[-index]
             game.setCaseVal(jeu, tmp_coup[0], tmp_coup[1], tmp_graine)
             game.addScore(jeu, game.getJoueur(jeu), -tmp_graine)  
             index += 1
 
 
 def peutManger(jeu, coup):
-	"""jeu * Pair[nat nat] -> bool
+    """jeu * Pair[nat nat] -> bool
         Retourne vrai si on peut manger le contenu de la case:
             - c'est une case appartenant a l'adversaire du joueur courant
             - La case contient 2 ou 3 graines
     """
     coup_y, coup_x = coup
-	if coup_y == game.getJoueur(jeu) - 1:
-		return False
-	value = game.getCaseVal(jeu, coup_y, coup_x)
-	if value not in [2, 3]:
-		return False
-	return True
+    if coup_y == game.getJoueur(jeu) - 1:
+        return False
+    print('peutManger:', coup)
+    value = game.getCaseVal(jeu, coup_y, coup_x)
+    if value not in [2, 3]:
+        return False
+    return True
 	
 
 def adversaireAffame(jeu):
-	joueur = game.getJoueur(jeu)
-	joueur = joueur % 2 + 1 #on recupere le joueur adverse
-	for index in range(6):
-		coup = game.getCaseVal(jeu, joueur - 1, index)
-		if coup:
-			return False
-	return True
+     joueur = game.getJoueur(jeu)
+     joueur = joueur % 2 + 1 #on recupere le joueur adverse
+     for index in range(6):
+          coup = game.getCaseVal(jeu, joueur - 1, index)
+          if coup:
+               return False
+     return True
 
 
 def nextCase(jeu, coup, antihoraire = True):
@@ -111,33 +113,33 @@ def nextCase(jeu, coup, antihoraire = True):
         #     return [coup_y, case]        
         if coup_y == 1:
             case = coup_x + sens #dans le cas ou on se trouve sur la 2eme ligne
-            if not coup_y:
-                case = coup_x - sens #dans le cas ou on se trouve sur la 1ere ligne
-            if case < 0 and not coup_y: #dans le cas ou on se trouve dans la 1ere ligne 1ere colonne dans le sens -1
-                return [1, 0]
-            if case > 5 and coup_x == 1 :
-                return [0, 5]
-            return [coup_y, case]
+        if not coup_y:
+            case = coup_x - sens #dans le cas ou on se trouve sur la 1ere ligne
+        if case < 0 and not coup_y: #dans le cas ou on se trouve dans la 1ere ligne 1ere colonne dans le sens -1
+            return [1, 0]
+        if case > 5 and coup_y == 1 :
+            return [0, 5]
+        return [coup_y, case]
     else:
         if coup_y == 1:
             case = coup_x - sens #dans le cas ou on se trouve sur la 2eme ligne
-            if not coup_y:
-                case = coup_x + sens #dans le cas ou on se trouve sur la 1ere ligne 
-            if case < 0 and coup_y == 1:
-                return [0, 0]
-            if case > 5 and coup_y == 1:
-                return [1, 5]
-    return [coup[0], case]        
+        if not coup_y:
+            case = coup_x + sens #dans le cas ou on se trouve sur la 1ere ligne 
+        if case < 0 and coup_y == 1:
+            return [0, 0]
+        if case > 5 and not coup_y:
+            return [1, 5]
+        return [coup[0], case]
 
 
 def coups(jeu):
-	graines = list()
-	joueur = game.getJoueur(jeu)
-	for index in range(6):
-		value = game.getCaseVal(jeu, j - 1 , index)
-		if value:
-			graines.append([j - 1, index])
-	return graines
+     graines = list()
+     joueur = game.getJoueur(jeu)
+     for index in range(6):
+          value = game.getCaseVal(jeu, joueur - 1 , index)
+          if value:
+               graines.append([joueur - 1, index])
+     return graines
 	
 
 def finalisePartie(jeu):
