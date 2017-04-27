@@ -5,6 +5,6 @@ import game
 
 
 def saisieCoup(jeu):
-    L=game.getCoupsValides(jeu)
-    c=L[0]
-    return c
+    Liste=game.getCoupsValides(jeu)
+    coup = Liste[0]
+    return coup

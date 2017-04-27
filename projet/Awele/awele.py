@@ -45,7 +45,7 @@ def getCoupsValides(jeu):
 
 
 def joueCoups(jeu, coup):
-    print(coup[0])
+    print(coup)
     value = game.getCaseVal(jeu, coup[0], coup[1])
     game.setCaseVal(jeu, coup[0], coup[1], 0)
     distribue(jeu, coup, value)
@@ -88,7 +88,6 @@ def peutManger(jeu, coup):
     coup_y, coup_x = coup
     if coup_y == game.getJoueur(jeu) - 1:
         return False
-    print('peutManger:', coup)
     value = game.getCaseVal(jeu, coup_y, coup_x)
     if value not in [2, 3]:
         return False

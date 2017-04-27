@@ -129,52 +129,7 @@ def affiche(jeu):
         line = prefix + '|'.join([ '{:5d}'.format(plateau[y][x]) for x in range(len(plateau[y])) ]) + '|'
         print(line)
     print(underline)
-    # plateau_jeu = jeu[0]
-    # s=getCoupsJoues(jeu)
-    # print('')
-    # print('')
-    # print('')
-    # print('')
-    # print('')
-    # print('')
-    # if(s==[]):
-    #     print('aucun coup joue')
-    # else:
-    #     p=len(s)-1
-    #     print('coup joue ='+ str(s[p]))
-    # print('Scores=' +str(getScores(jeu)))
-    # print('Plateau:')
-    # print('')
-    # k=0
-    # p=0
-    # c=0
-    # c2=0
-    # c3=0
-    # w=jeu[0][0]
-    # print('       |'),
-    # for o in w:
-    #     print('   ' +str(c3)+ '   |'),
-    #     c3=c3+1
-    # print('')
-    # for v in range (0,len(w)+1):
-    #     print('--------'),
-    # print('')
-    # for i in plateau_jeu:
-    #     for j in i:
-    #         if(p==0):
-    #             print('   ' +str(c2)+ '   |'),
-    #             p=p+1
-    #             c2=c2+1
-    #         print('   ' +str(j)+ '   |'),
-    #         c=c+1
-    #     print('    ')
-    #     k=1
-    #     p=0
-    #     w=0
-    #     for n in range(0,len(i)+1):
-    #        print('--------'),
-    #     print('')
-    # print('joueur',getJoueur(jeu),'a vous de jouer')
+    
 
 # Fonctions utiles
 

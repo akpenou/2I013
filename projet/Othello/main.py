@@ -1,8 +1,8 @@
-import awele
+import othello
 import sys
 sys.path.append("..")
 import game
-game.game=awele
+game.game=othello
 sys.path.append("./Joueurs")
 import joueur_humain
 import premier_coup_valide
@@ -19,7 +19,7 @@ for index in range(1):
         game.getCoupsValides(jeu)
         coup = game.saisieCoup(jeu)
         game.joueCoups(jeu, coup)
-        game.affiche(jeu)
+        
     gagnant = game.getGagnant(jeu)
     if gagnant == 1:
         resultat[0] += 1
