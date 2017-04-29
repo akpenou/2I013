@@ -25,7 +25,7 @@ def eval_graineJ(jeu,moi):
 
         
 def eval_graineA(jeu,moi): 
-    """ Evalue le nombre de cases de l'adversaire avec 1 ou 2 graines """    
+    """ Evalue le nombre de cases de l adversaire avec 1 ou 2 graines """    
     adv = moi % 2 
     for i in range (0, 5):
         graine = game.getCaseVal(jeu,adv,i)
@@ -36,15 +36,15 @@ def eval_graineA(jeu,moi):
 def evaluation(jeu,joueur):
     a = 0.5
     b = -1
-    c = 1
+    c = 1 
     return a * eval_score(jeu,joueur) + b * eval_graineJ(jeu,joueur) + c * eval_graineA(jeu,joueur)
 
 
 def estimation(jeu,coup,profondeur,alpha,beta):
-#Estimation :retourne un score d’utilité estimée pour un coup donné à partir d’un état de jeu courant
+#Estimation :retourne un score d utilite estimee pour un coup donne a partir d un etat de jeu courant
     moi=game.getJoueur(jeu)
     copie=game.getCopieJeu(jeu)
-    game.joueCoups(copie,coup)
+    game.joueCoup(copie,coup)
     if game.finJeu(copie):
         g=game.getGagnant(copie)
         if g == moi :
