@@ -94,7 +94,6 @@ def getGagnant(jeu):
     Retourne le numero du joueur gagnant apres avoir finalise la partie. Retourne 0 si match nul
     """
     score = getScores(jeu)
-    print(score)
     if score[0] < score[1]:
         return 2
     elif score[1] < score[0]:

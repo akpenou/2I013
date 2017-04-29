@@ -5,14 +5,15 @@ import game
 game.game=othello
 sys.path.append("./Joueurs")
 import joueur_humain
+import joueur_minmax
 import premier_coup_valide
 import joueur_aleatoire
 import joueur_alphabeta
-game.joueur1=premier_coup_valide
+game.joueur1=joueur_aleatoire
 game.joueur2=joueur_alphabeta
 
 resultat = [0, 0]
-for index in range(1):
+for index in range(10):
     jeu = game.initialiseJeu()
     print("Partie n°{:d}".format(index))
     while not game.finJeu(jeu):

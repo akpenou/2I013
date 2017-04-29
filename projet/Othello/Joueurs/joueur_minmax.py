@@ -14,10 +14,11 @@ ai une évaluation équivalente du jeu. """
 import sys
 sys.path.append("../..")
 import game
-p=4
+inf=4
 
-def saisiecoup(jeu):
-    coup=decision(jeu)
+
+def saisieCoup(jeu):
+    coup=decision(jeu,game.getCoupsValides(jeu))
     return coup
 
 
@@ -32,52 +33,48 @@ def evaluation(jeu):
 
 def estimation(jeu,coup,profondeur,alpha,beta):
 #Estimation :retourne un score d’utilité estimée pour un coup donné à partir d’un état de jeu courant
-	moi=game.getJoueur(jeu)
-	copie=game.getCopieJeu(jeu)
-	game.joueCoups(copie,jeu)
-	if game.finJeu(copie):
-		g=game.getGagnant(copie)
-	if g == moi :
-		return 10000
-	else:
-		if g == 0 :
-			return -100
-		else :
-			return -10000
-	if profondeur >= p :
-		return evaluation(copie)
-	else :
-		liste= game.getCoupsValides(copie)
-		m=10000
-		for i in liste:
-			e = estimation(jeu,i,profondeur)
-			if( profondeur%2 == 0):
-				if (m < e):
-					m = e
-    				return m
-    			else :
-    				if(m > e):
-            				m = e 
-            			return m
+    moi=game.getJoueur(jeu)
+    copie=game.getCopieJeu(jeu)
+    game.joueCoups(copie,coup)
+    if game.finJeu(copie):
+        g=game.getGagnant(copie)
+        if g == moi :
+            return 10000
+        else:
+            if g == 0 :
+                return -100
+            else :
+                return -10000
+	
+    if profondeur >= inf :
+        return evaluation(copie)
+    else :
+        liste= game.getCoupsValides(copie)
+        best=10000
+        for coup in liste:
+            valeur = estimation(jeu,coup,profondeur+1,alpha,beta)
+            if( profondeur%2 == 0):
+                if (best < valeur):
+                    best = valeur
+                return best
+            else :
+                if(best > valeur):
+                    best = valeur 
+            return best
             			
             			
             			
-def decision(jeu):
-#Decision :retourne la paire [Coup . Score] dont le score correspond au score d’évaluation maximal de la liste de coups passée en paramètre
-	alpha= -10000000000000
-    	beta = 10000000000000
-   
-    	liste_coup = game.getCoupsValides(jeu)
-    	L=[]
-    	index=0
-    	for i in range (len(liste_coup)):
-        	k = estimation(game.getCopieJeu(jeu),liste_coup[i],4,alpha,beta)
-        	if (moi == 1) :
-            		if (k>=alpha):
-                		index = i
-                		alpha = k
-        	else :
-            		if (k>alpha):
-                		index = i
-                		alpha = k
-    	return liste_coup[index]
+def decision(jeu, coups):
+    #retourne le meilleur  coup et son score
+    alpha = -10000
+    beta = 10000
+    temp = -10000
+    max_coup = coups[0]
+    for coup in coups:
+        valeur = estimation(jeu, coup, 1, alpha, beta)
+        if valeur > alpha:
+            alpha = valeur
+            max_coup = coup
+        alpha = temp
+    return max_coup
+

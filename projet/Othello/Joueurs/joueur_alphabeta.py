@@ -3,9 +3,7 @@ sys.path.append("../..")
 import game
 
 inf=4
-def evaluation (jeu):
-    #retourne un score d'evaluation
-    moi=game.getJoueur(jeu)
+def evaluation (jeu,moi):
     adv=moi%2+1
     score = 0
     for x in range(8):
@@ -67,45 +65,44 @@ def estimation(jeu,coup,profondeur,alpha,beta):
             else :
                 return -10000
     if profondeur == inf :
-        return evaluation(copie)
+        return evaluation(copie,moi)
     else :
         liste= game.getCoupsValides(copie)
         if(profondeur%2==0) :
-            best=100000
+            best=10000
         else:
-            best=-100000
-    for i in liste:
-        valeur = estimation(jeu,i,profondeur+1,alpha,beta)
-        if( profondeur%2 == 0):
-            if (valeur < best):
-                best = valeur
+            best=-10000
+        for coup in liste:
+            valeur = estimation(jeu,coup,profondeur+1,alpha,beta)
+            if( profondeur%2 == 1):
+                if (valeur < best):
+                    best = valeur
                 if best < beta:
                     beta = best
-                    if alpha > beta:
-                        return best
-        else:	
-            if (valeur > best):
-                best = valeur
+                if alpha >= best:
+                        return best+1
+            else:
+                if (valeur > best):
+                    best = valeur
                 if best > alpha:
                     alpha = best
-                    if alpha > best:
-                        return best
-    return best
-    
-    
+                if best >= beta:
+                        return best-1
+        return best
+            			
+            			
+            			
 def decision(jeu, coups):
     #retourne le meilleur  coup et son score
-    alpha = -100000
-    beta = 100000
-    alpha = estimation(jeu, coups[0], 1, alpha, beta)
+    alpha = -10000
+    beta = 10000
+    temp = -10000
     max_coup = coups[0]
-
-    for c in coups:
-        s = estimation(jeu, c, 1, alpha, beta)
-        if s >= beta:
-            break
-        if s > alpha:
-            alpha = s
-            max_coup = c
-    return max_coup		
+    for coup in coups:
+        valeur = estimation(jeu, coup, 1, alpha, beta)
+        if valeur > alpha:
+            alpha = valeur
+            max_coup = coup
+        alpha = temp
+    return max_coup
 

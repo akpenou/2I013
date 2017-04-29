@@ -22,7 +22,7 @@ def initScores():
 	
 def finJeu(jeu):
     score = game.getScores(jeu)
-    print ('awele - finjeu - liste coups valides:', game.getCoupsValides(jeu))
+    #print ('awele - finjeu - liste coups valides:', game.getCoupsValides(jeu))
     return not len(game.getCoupsValides(jeu)) or score[0] >= 25 or score[1] >= 25
 	
 def getCoupsValides(jeu):
@@ -45,7 +45,6 @@ def getCoupsValides(jeu):
 
 
 def joueCoups(jeu, coup):
-    print(coup)
     value = game.getCaseVal(jeu, coup[0], coup[1])
     game.setCaseVal(jeu, coup[0], coup[1], 0)
     distribue(jeu, coup, value)
