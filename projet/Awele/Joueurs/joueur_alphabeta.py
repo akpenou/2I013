@@ -7,37 +7,15 @@ def saisieCoup(jeu):
     coup=decision(jeu,game.getCoupsValides(jeu))
     return coup
 
-      
-def eval_score(jeu,moi):
-    """retourne le score de moi"""
-    L = game.getScores(jeu)
-    x = moi - 1
-    return L[x]   
     
- 
-def eval_graineJ(jeu,moi): 
-    """ Evalue le nombre de cases du joueur avec 1 ou 2 graines """   
-    for i in range (0, 5):
-        graine = game.getCaseVal(jeu,moi-1,i)
-        if (graine == 1) or (graine == 2):
-            graine+=1
-    return graine
 
-        
-def eval_graineA(jeu,moi): 
-    """ Evalue le nombre de cases de l adversaire avec 1 ou 2 graines """    
-    adv = moi % 2 
-    for i in range (0, 5):
-        graine = game.getCaseVal(jeu,adv,i)
-        if (graine == 1) or (graine == 2):
-            graine+=1
-    return graine
     
 def evaluation(jeu,joueur):
-    a = 0.5
-    b = -1
-    c = 1 
-    return a * eval_score(jeu,joueur) + b * eval_graineJ(jeu,joueur) + c * eval_graineA(jeu,joueur)
+    score=game.getScores(jeu)
+    if joueur==1:
+        return score[1]-score[0]
+    else:
+        return score[0]-score[1]
 
 
 def estimation(jeu,coup,profondeur,alpha,beta):
@@ -93,7 +71,6 @@ def decision(jeu, coups):
         if valeur > alpha:
             alpha = valeur
             max_coup = coup
-        alpha = temp
     return max_coup
 
 

@@ -44,7 +44,7 @@ def getCoupsValides(jeu):
     return coups_valides
 
 
-def joueCoups(jeu, coup):
+def joueCoup(jeu, coup):
     value = game.getCaseVal(jeu, coup[0], coup[1])
     game.setCaseVal(jeu, coup[0], coup[1], 0)
     distribue(jeu, coup, value)

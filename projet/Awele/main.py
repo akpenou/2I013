@@ -18,7 +18,7 @@ for index in range(20):
     while not game.finJeu(jeu):
         game.getCoupsValides(jeu)
         coup = game.saisieCoup(jeu)
-        game.joueCoups(jeu, coup)
+        game.joueCoup(jeu, coup)
     gagnant = game.getGagnant(jeu)
     if gagnant == 1:
         resultat[0] += 1

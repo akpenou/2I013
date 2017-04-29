@@ -55,13 +55,13 @@ def saisieCoup(jeu):
         coup = joueur.saisieCoup(getCopieJeu(jeu))
     return coup
 
-def joueCoups(jeu, coup):
+def joueCoup(jeu, coup):
     """jeu*coup->void
         Joue un coup a l'aide de la fonction joueCoup defini dans le module game
         Hypothese:le coup est valide
         Met tous les champs de jeu a  jour (sauf coups valides qui est fixe a  None)
     """
-    return game.joueCoups(jeu, coup)
+    return game.joueCoup(jeu, coup)
     
 def coupValide(jeu, coup):
     """ Verifie si un coup est valide.
