@@ -7,9 +7,9 @@ sys.path.append("./Joueurs")
 import joueur_humain
 import premier_coup_valide
 import joueur_aleatoire
-import joueur_alphabeta
+import alphabeta_player
 game.joueur1=joueur_aleatoire
-game.joueur2=joueur_alphabeta
+game.joueur2=alphabeta_player
 
 resultat = [0, 0]
 for index in range(20):
