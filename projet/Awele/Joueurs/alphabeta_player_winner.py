@@ -7,14 +7,14 @@ def saisieCoup(jeu):
     return alpha_beta(jeu, 1, -10000, 10000)[1]
     
 def evaluation(jeu,joueur):
-    score=game.getScores(jeu)
+    return sum(jeu[0][joueur - 1]) - sum(jeu[0][joueur % 2])
     if joueur==1:
         return score[1] - score[0]
     else:
         return score[0] - score[1]
 
 INFINITY = 10000
-INF = 4
+INF = 5
 
 def alpha_beta(jeu, profondeur, alpha, beta):
     if game.finJeu(jeu):
