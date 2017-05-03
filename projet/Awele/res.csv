@@ -1,0 +1,33 @@
+Joueur number, name, temps par coup, score, noeud explore
+1 , premier_coup_valide , 0.0005067008914369526 , 10
+2 , premier_coup_valide , 0.0005020939722293761 , 0
+
+1 , joueur_aleatoire , 0.00023209833884024406 , 4
+2 , premier_coup_valide , 0.00022989196834880663 , 6
+
+1 , alphabeta_v , 0.11165166152151007 , 10
+2 , premier_coup_valide , 8.906655841403537e-05 , 0
+
+1 , premier_coup_valide , 0.00019338400694575623 , 8
+2 , joueur_aleatoire , 0.00019250578350490995 , 1
+
+1 , joueur_aleatoire , 0.00021510519325845435 , 5
+2 , joueur_aleatoire , 0.00021333002862129502 , 4
+
+1 , alphabeta_v , 0.175974055407519 , 10
+2 , joueur_aleatoire , 9.856655099297647e-05 , 0
+
+1 , premier_coup_valide , 0.00010251839955647787 , 0
+2 , alphabeta_v , 0.11844379345575969 , 10
+
+1 , joueur_aleatoire , 8.609967354016427e-05 , 0
+2 , alphabeta_v , 0.12344989165281638 , 10
+
+1 , alphabeta_v , 0.13736369645417626 , 10
+2 , alphabeta_v , 0.13375131443365296 , 0
+
+1 , deep_5 , 0.11114001274108887 , 10 , 776.72
+2 , deep_4 , 0.04790483017762502 , 0 , 313.8333333333333
+
+1 , deep_3 , 0.015078309419992808 , 10 , 83.83783783783784
+2 , deep_2 , 0.007727503776550293 , 0 , 38.861111111111114

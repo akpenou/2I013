@@ -54,7 +54,7 @@ def estimation(jeu,coup,profondeur,alpha,beta):
 #Estimation :retourne un score d’utilité estimée pour un coup donné à partir d’un état de jeu courant
     moi=game.getJoueur(jeu)
     copie=game.getCopieJeu(jeu)
-    game.joueCoups(copie,coup)
+    game.joueCoup(copie,coup)
     if game.finJeu(copie):
         g=game.getGagnant(copie)
         if g == moi :

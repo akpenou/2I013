@@ -74,10 +74,8 @@ def coupValide(jeu, coup):
         True si le coup est valide, False sinon
     """
     coups_valides = getCoupsValides(jeu)
-    coup_y, coup_x = coup
     for coup_valide in coups_valides:
-        coup_valide_y, coup_valide_x = coup_valide
-        if coup_x == coup_valide_x and coup_y == coup_valide_y:
+        if coup == coup_valide:
             return True
     return False
 
@@ -122,7 +120,7 @@ def affiche(jeu):
     header = '     |' + '|'.join([ '{:5d}'.format(index) for index in range(len(plateau[0]))]) + '|'
     underline = '-' * len(header)
     print(header)
-    for y in range(len(plateau)):
+    for y in range(len(plateau) - 1, 0 - 1, -1):
         print(underline)
         prefix = '{:5d}|'.format(y)
         line = prefix + '|'.join([ '{:5d}'.format(plateau[y][x]) for x in range(len(plateau[y])) ]) + '|'

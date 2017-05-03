@@ -5,7 +5,6 @@ import game
 
 
 def initPlateau():
-
     return [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,1,2,0,0,0],[0,0,0,2,1,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
 	
 def initScores():
@@ -15,20 +14,18 @@ def finJeu(jeu):
     return len(game.getCoupsValides(jeu))==0
     	
 def coups(jeu):
-    
     j=game.getJoueur(jeu)
     if(j==2):
         j=1
     else:
         j=2
-    
-    s={str(x) for l in range(0,7) for c in range(0,7) for x in entourageVide(jeu,[l,c]) if game.getCaseVal(jeu,l,c)==j}
+    s = {str(x) for l in range(0,7) for c in range(0,7) for x in entourageVide(jeu,[l,c]) if game.getCaseVal(jeu,l,c)==j}
     return [eval(x) for x in s]
     
     
 def getCoupsValides(jeu):
     cps=coups(jeu)
-    return [x for x in cps if len(encadrement(jeu,x,False))>0]
+    return [x for x in cps if len(encadrement(jeu,x,False)) > 0]
 
 def entourageVide(jeu,case):
     ret=[]
@@ -98,7 +95,7 @@ def encadre(jeu,l,c,ml,mc):
     return False
             
 
-def joueCoups(jeu,Coup):
+def joueCoup(jeu,Coup):
     game.getCoupsJoues(jeu).append(Coup)
     j=game.getJoueur(jeu)
     s=game.getScores(jeu)
@@ -116,29 +113,6 @@ def joueCoups(jeu,Coup):
                 game.setCaseVal(jeu,l,c,j)
                 s[j-1]+=1
                 s[adv-1]-=1
+    s[j-1]+=1
     game.changeJoueur(jeu)
     game.razCoupsValides(jeu)
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    

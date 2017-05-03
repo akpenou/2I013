@@ -1,0 +1,9 @@
+notes pour les courbes
+alphabeta complexe vs simple
+	courbe victoire, defaite temps, noeud evalues
+	nombre de noeud en fonction de la profondeur
+	temps d'execution en fonction de la profondeur
+
+alphabeta contre lui meme, meme donnee que precedemment
+alphabeta complex contre lui meme, meme donnee que precedemment
+minmax contre lui meme
